@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUSION Corporation - Task Management</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-image: url(bgimg.jpg);
+      background-size: cover; /* Changed to cover */
+      color: #333;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: center; /* Centers the logo horizontally */
+      align-items: center;
+      background: linear-gradient(135deg, #090444, #4c0457); /* Olive green */
+      padding: 15px 30px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    #logo {
+      height: 120px;
+      border-radius: 5px;
+    }
+
+    header nav {
+      position: absolute; /* To keep the navigation links in place */
+      right: 30px; /* Align them to the right */
+    }
+
+    header nav a {
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+      padding: 10px 20px;
+      background-color: #090a42; 
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    header nav a:hover {
+      background-color:  #27b0c3; 
+      transform: translateY(-2px);
+    }
+
+    /* Main content */
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh; /* Adjust as needed */
+      max-width: 100%;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .left-content {
+      flex: 1;
+      padding: 20px;
+      max-width: 500px;
+    }
+
+    .right-content {
+      flex: 1;
+      padding: 20px;
+      max-width: 500px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: white;
+      text-align: center;
+    }
+
+    /* Input Fields */
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 2px solid #e1e4ea;
+      border-radius: 8px;
+      background-color: #f7f9fc;
+      transition: border 0.3s ease;
+      font-size: 16px;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #9ae6f1; /* Pink focus border */
+      outline: none;
+    }
+
+    /* Buttons */
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #8a2be2, #ff69b4); /* Gradient for buttons */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #7123b9, #81355b); /* Lighter gradient on hover */
+      transform: translateY(-3px);
+    }
+
+    /* Social Media Icons */
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-color: #fff;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background-color: #ddd;
+      color: #000;
+    }
+
+    /* Task list items */
+    ul li {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.8); /* Transparent background */
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    ul li:hover {
+      opacity: 0.8;
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #090444, #4c0457); /* Gradient for footer */
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: white;
+      margin-left: 10px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #ff69b4; /* Pink on hover */
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      main {
+        flex-direction: column;
+      }
+
+      .left-content, .right-content {
+        max-width: 100%;
+        padding: 10px;
+      }
+
+      button {
+        font-size: 16px;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .social-links {
+        margin-top: 10px;
+      }
+    }
+
+    /* Task Status Dots */
+    .status-dot {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .active-dot {
+      background-color: green;
+    }
+
+    .waitlisted-dot {
+      background-color: yellow;
+    }
+
+    .rejected-dot {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <header align="center">
+    <img src="canvafl.png" alt="FUSION Corporation Logo" id="logo">
+    <nav>
+      <a href="#" id="logout-btn" style="display:none">Logout</a>
+    </nav>
+  </header>
+
+  <main id="content">
+    <div class="left-content">
+        <h1>Welcome to FUSION Corporation</h1>
+        <p>Join us and be a part of our innovative team. Apply for various tasks and roles or manage tasks as an admin. Explore opportunities and contribute to our success.</p>
+      </div>
+      <div class="right-content">
+    <!-- Login form -->
+    <section id="login-section">
+      <h2>Login to FUSION Corporation</h2>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button id="login-btn">Login</button>
+      <p id="login-error" style="color: red; display: none;">Invalid credentials</p>
+      <!-- Social Media Icons -->
+      <div class="social-icons">
+        
+            <a href="https://www.instagram.com" target="_blank" title="Instagram">
+              <img src="instagram.svg" alt="Instagram" width="24" height="24">
+            </a>
+            <a href="https://www.facebook.com" target="_blank" title="Facebook">
+              <img src="facebook.svg" alt="Facebook" width="24" height="24">
+            </a>
+            <a href="https://www.google.com" target="_blank" title="Google">
+              <img src="google.svg" alt="Twitter" width="24" height="24">
+            </a>
+          </div>
+          
+
+    </section>
+    </div>
+    </main>
+
+    <!-- Admin Dashboard -->
+    <section id="admin-dashboard" style="display:none">
+      <h2>Admin Dashboard</h2>
+      <div class="dashboard-section">
+        <h3>Manage Tasks</h3>
+        <input type="text" id="task-desc" placeholder="Task Description">
+        <input type="text" id="employee-id" placeholder="Assign to Employee ID">
+        <select id="task-status">
+          <option value="active">Active🟢</option>
+          <option value="waitlisted">Waitlisted🟡</option>
+          <option value="rejected">Rejected🔴</option>
+        </select>
+        <button id="add-task-btn">Add Task</button>
+        <ul id="task-list"></ul>
+      </div>
+    </section>
+    
+    <!-- Employee Dashboard -->
+    <section id="employee-dashboard" style="display:none">
+      <h2>Employee Dashboard</h2>
+      <ul id="employee-task-list"></ul>
+
+      <h3>Apply for Tasks</h3>
+      <form id="task-application-form">
+        <div class="form-group">
+          <label for="task-vacancy">Vacancy</label>
+          <select id="task-vacancy">
+            <option value="Software Developer">Software Developer</option>
+            <option value="UI/UX Developer">UI/UX Developer</option>
+            <option value="Fashion Designer">Fashion Designer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="applicant-name">Name</label>
+          <input type="text" id="applicant-name" placeholder="Full Name">
+        </div>
+        <div class="form-group">
+          <label for="applicant-address">Address</label>
+          <input type="text" id="applicant-address" placeholder="Address">
+        </div>
+        <div class="form-group">
+          <label for="employee-id">Employee ID</label>
+          <input type="text" id="employee-id" placeholder="Employee ID">
+        </div>
+        <div class="form-group">
+          <label for="resume">Resume</label>
+          <input type="file" id="resume">
+        </div>
+        <div class="form-group">
+          <label for="photo">Photo</label>
+          <input type="file" id="photo">
+        </div>
+        <div class="form-group">
+          <label for="signature">Signature</label>
+          <input type="file" id="signature">
+        </div>
+        <button type="submit">Apply</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div>&copy; 2024 FUSION Corporation</div>
+      <div class="social-links">
+        <a href="https://www.instagram.com" target="_blank" title="Instagram">Instagram</a>
+        <a href="https://www.facebook.com" target="_blank" title="Facebook">Facebook</a>
+        <a href="https://www.twitter.com" target="_blank" title="Twitter">Twitter</a>
+        <a href="https://www.LinkedIn.com" target="_blank" title="Linkedin">LinkedIn</a>
+        
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const users = [
+        { id: 1, username: 'admin', password: 'admin123', role: 'admin' },
+        { id: 2, username: 'employee1', password: 'password1', role: 'employee' }
+      ];
+    
+      const tasks = [];
+    
+      const loginSection = document.getElementById('login-section');
+      const adminDashboard = document.getElementById('admin-dashboard');
+      const employeeDashboard = document.getElementById('employee-dashboard');
+      const logoutBtn = document.getElementById('logout-btn');
+      const loginError = document.getElementById('login-error');
+    
+      const loginBtn = document.getElementById('login-btn');
+      const taskList = document.getElementById('task-list');
+      const employeeTaskList = document.getElementById('employee-task-list');
+      let loggedInUser = null;
+    
+    loginBtn.addEventListener('click', () => {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+  
+      const user = users.find(u => u.username === username && u.password === password);
+  
+      if (user) {
+        loggedInUser = user;
+        loginSection.style.display = 'none';
+        if (user.role === 'admin') {
+          adminDashboard.style.display = 'block';
+        } else if (user.role === 'employee') {
+          employeeDashboard.style.display = 'block';
+          showEmployeeTasks();
+        }
+        logoutBtn.style.display = 'block';
+      } else {
+        loginError.style.display = 'block';
+      }
+    });
+  
+    logoutBtn.addEventListener('click', () => {
+      loggedInUser = null;
+      loginSection.style.display = 'block';
+      adminDashboard.style.display = 'none';
+      employeeDashboard.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      taskList.innerHTML = '';
+      employeeTaskList.innerHTML = '';
+    });
+  
+    document.getElementById('add-task-btn').addEventListener('click', () => {
+      const taskDesc = document.getElementById('task-desc').value;
+      const employeeId = document.getElementById('employee-id').value;
+      const taskStatus = document.getElementById('task-status').value;
+  
+      if (taskDesc && employeeId && taskStatus) {
+        const task = {
+          id: tasks.length + 1,
+          description: taskDesc,
+          employeeId: employeeId,
+          status: taskStatus
+        };
+        tasks.push(task);
+        displayTasks();
+      }
+    });
+  
+    function displayTasks() {
+        taskList.innerHTML = '';
+  tasks.forEach(task => {
+    const taskItem = document.createElement('li');
+    const statusDot = document.createElement('span');
+    
+    // Assign dot color based on task status
+    if (task.status === 'active') {
+      statusDot.classList.add('status-dot', 'active-dot');
+    } else if (task.status === 'waitlisted') {
+      statusDot.classList.add('status-dot', 'waitlisted-dot');
+    } else if (task.status === 'rejected') {
+      statusDot.classList.add('status-dot', 'rejected-dot');
+    }
+    
+    taskItem.textContent = `Task: ${task.description}, Assigned to Employee ID: ${task.employeeId}`;
+    taskItem.prepend(statusDot); // Add the dot before the task description
+    taskList.appendChild(taskItem);
+  });
+    }
+  
+    function showEmployeeTasks() {
+      employeeTaskList.innerHTML = '';
+      tasks.forEach(task => {
+        if (task.employeeId === loggedInUser.id) {
+          const taskItem = document.createElement('li');
+          taskItem.textContent = `Task: ${task.description}, Status: ${task.status}`;
+          taskItem.classList.add(task.status);
+          employeeTaskList.appendChild(taskItem);
+        }
+      });
+    }
+  
+    document.getElementById('task-application-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Application submitted!');
+    });
+  });
+
+  
+</script>
+</body>
+</html>
